@@ -7,23 +7,19 @@
 </head>
 <body> 
   <nav><a href="/login"><img id="logo" src="/assets/img/face.png" alt="face logo"/></a>
-    <div class="navlink"><a href="/login">Login</a></div>
-    <div class="navlink"><a href="/signup">Sign up</a></div>
+    <div class="navlink"><a id="loginButton" href="/login">Login</a></div>
+    <div class="navlink"><a id="signupButton" href="/signup">Sign up</a></div>
   </nav>
-  <section id="login">
-    <form id="loginForm" name="loginForm" action="/login" method="POST" class="mainForm">
-      <label for="username">Username: </label>
-      <input id="user" type="text" name="username" placeholder="username"/>
-      <label for="pass">Password: </label>
-      <input id="pass" type="password" name="pass" placeholder="password"/>
-      <input class="formSubmit" type="submit" value="Sign In" />
-    </form>
+  
+  <section id="content">
+
   </section>
+
   <div id="domoMessage" class='hidden'>
     <img id="speech" src="/assets/img/speech.png" alt="speech box"/>
     <h3><span id="errorMessage"></span></h3>
     <img id="domo" src="assets/img/domo.png" alt="domo"/>
   </div>
-  <script src="/assets/bundle.js"></script>
+  <script src="/assets/loginBundle.js"></script>
 </body>
 </html>
