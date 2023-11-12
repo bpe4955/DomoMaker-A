@@ -68,12 +68,12 @@ const changePass = async (req, res) => {
       await Account.updateOne({ _id: req.session.account._id }, { password: hash });
       // Successfully updated Password
       req.session.account = Account.toAPI(account);
+      return res.status(200).json({ message: 'Password Updated!' });
     } catch (error) {
       console.log(error);
       // Server Error
       return res.status(500).json({ error: 'An error occured!' });
     }
-    return res.json({ error: 'Password Updated' });
   });
 };
 

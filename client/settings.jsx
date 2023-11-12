@@ -2,22 +2,6 @@ const helper = require('./helper.js');
 const React = require('react');
 const ReactDOM = require('react-dom');
 
-const handleLogin = (e) => {
-    e.preventDefault();
-    helper.hideError();
-
-    const username = e.target.querySelector('#user').value;
-    const pass = e.target.querySelector('#pass').value;
-
-    if (!username || !pass) {
-        helper.handleError('Username or password is empty!');
-        return false;
-    }
-
-    helper.sendPost(e.target.action, { username, pass });
-
-    return false;
-};
 
 const handlePassChange = (e) => {
     e.preventDefault();
@@ -40,7 +24,13 @@ const handlePassChange = (e) => {
         return false;
     }
 
-    helper.sendPost(e.target.action, { oldPass, pass, pass2 });
+    helper.sendPost(e.target.action, { oldPass, pass, pass2 }, result => {
+        if(result.message){
+            document.getElementById('errorMessage').textContent = result.message;
+            document.getElementById('domoMessage').classList.remove('hidden');
+            document.querySelector("#changePassForm").reset();
+        }
+    });
 
     return false;
 };
