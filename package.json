@@ -5,12 +5,12 @@
   "main": "./server/app.js",
   "scripts": {
     "webpack": "webpack",
-    "webpackWatch": "webpack watch",
+    "watchBundle": "webpack watch",
     "nodemon": "nodemon -e js,html,css --watch ./server --watch ./hosted ./server/app.js",
     "start": "node ./server/app.js",
     "pretest": "eslint ./server --fix",
     "test": "echo \"Tests complete\"",
-    "heroku-postbuild": "webpack"
+    "heroku-postbuild": "webpack --mode production"
   },
   "keywords": [
     "Node",

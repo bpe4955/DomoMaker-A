@@ -4,6 +4,8 @@ const { Account } = models;
 
 const loginPage = (req, res) => res.render('login');
 
+const settingsPage = (req, res) => res.render('settings');
+
 const logout = (req, res) => {
   req.session.destroy();
   res.redirect('/');
@@ -47,9 +49,39 @@ const signup = async (req, res) => {
   return res.json({ redirect: '/maker' });
 };
 
+const changePass = async (req, res) => {
+  const oldPass = `${req.body.oldPass}`;
+  const pass = `${req.body.pass}`;
+  const pass2 = `${req.body.pass2}`;
+  // Error Checking
+  if (!oldPass || !pass || !pass2) { return res.status(400).json({ error: 'All fields are required!' }); }
+  if (pass !== pass2) { return res.status(400).json({ error: 'Passwords do not match!' }); }
+
+  // If old password is valid
+  return Account.authenticate(req.session.account.username, oldPass, async (err, account) => {
+    if (err || !account) { return res.status(400).json({ error: 'Wrong password!' }); }
+    // Correct Current Password
+
+    // Hashing and updating user
+    try {
+      const hash = await Account.generateHash(pass);
+      await Account.updateOne({ _id: req.session.account._id }, { password: hash });
+      // Successfully updated Password
+      req.session.account = Account.toAPI(account);
+    } catch (error) {
+      console.log(error);
+      // Server Error
+      return res.status(500).json({ error: 'An error occured!' });
+    }
+    return res.json({ error: 'Password Updated' });
+  });
+};
+
 module.exports = {
   loginPage,
+  settingsPage,
   logout,
   login,
   signup,
+  changePass,
 };
